@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taqueria y Antojitos Mario</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header id="top" class="hero">
+      <div class="hero__overlay"></div>
+      <div class="hero__content container">
+        <img class="hero__logo" src="assets/logo.png" alt="Logo Taqueria y Antojitos Mario" />
+        <h1 id="restaurant-name" class="hero__title">Taqueria y Antojitos Mario</h1>
+        <p id="restaurant-subtitle" class="hero__subtitle"></p>
+      </div>
+    </header>
 
+    <main>
+      <section class="section" id="historia">
+        <div class="container">
+          <h2 class="section__title">Nuestra Historia</h2>
+          <div id="historia-content" class="story"></div>
+        </div>
+      </section>
+
+      <section class="section section--muted" id="datos-generales">
+        <div class="container">
+          <h2 class="section__title">Datos Generales</h2>
+          <div id="datos-content" class="info-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="menu">
+        <div class="container">
+          <h2 class="section__title section__title--center">MENU</h2>
+          <div id="menu-content" class="menu"></div>
+        </div>
+      </section>
+
+      <section class="section section--muted" id="acciones">
+        <div class="container">
+          <h2 class="section__title">Acciones</h2>
+          <div id="actions-content" class="actions"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__content">
+        <p class="footer__disclaimer">Precios sujetos a cambio. Imágenes solo ilustrativas.</p>
+        <a class="footer__link" href="#top">Volver arriba</a>
+      </div>
+    </footer>
+  </body>
+</html>
