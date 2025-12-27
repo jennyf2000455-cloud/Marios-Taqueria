@@ -1,6 +1,11 @@
 const CONFIG = {
   nombre: "Taqueria y Antojitos Mario",
   subtitulo: "Auténticos antojitos mexicanos en Los Fresnos",
+  assets: {
+    logo: "assets/logo.png",
+    cover: "",
+    qr: ""
+  },
   historia: [
     "En Taqueria y Antojitos Mario celebramos los sabores tradicionales de México con una cocina cercana y familiar. Cada platillo se prepara al momento para mantener la esencia de la comida callejera con un toque casero.",
     "Nuestra taquería nació del deseo de compartir recetas sencillas, llenas de sabor y hechas con ingredientes frescos. Aquí encontrarás un menú pensado para disfrutar en cualquier momento del día.",
@@ -158,7 +163,7 @@ const datosContainer = document.querySelector("#datos-content");
 const menuContainer = document.querySelector("#menu-content");
 const actionsContainer = document.querySelector("#actions-content");
 const hero = document.querySelector(".hero");
-const heroLogo = document.querySelector(".hero__logo");
+const heroLogo = document.querySelector("#heroLogo");
 
 const safeSetText = (selector, text) => {
   const element = document.querySelector(selector);
@@ -236,6 +241,9 @@ const renderActions = () => {
   );
   const whatsappLink = `https://wa.me/${CONFIG.whatsapp}?text=${whatsappMessage}`;
   const crmEnabled = Boolean(CONFIG.crmUrl);
+  const qrPath = CONFIG.assets?.qr?.trim();
+  const qrImageStyle = qrPath ? "" : "display:none;";
+  const qrPlaceholderStyle = qrPath ? "display:none;" : "";
 
   actionsContainer.innerHTML = `
     <article class="action-card">
@@ -246,8 +254,13 @@ const renderActions = () => {
     <article class="action-card">
       <h3>Asistente IA</h3>
       <div class="action-card__qr">
-        <img src="assets/qr.png" alt="QR del asistente" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <span class="action-card__placeholder" style="display:none;">QR disponible próximamente</span>
+        <img
+          src="${qrPath ?? ""}"
+          alt="QR del asistente"
+          style="${qrImageStyle}"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="action-card__placeholder" style="${qrPlaceholderStyle}">QR disponible próximamente</span>
       </div>
     </article>
     <article class="action-card">
@@ -269,6 +282,12 @@ const renderActions = () => {
 };
 
 const applyHeroImages = () => {
+  const coverPath = CONFIG.assets?.cover?.trim();
+  if (!hero || !coverPath) {
+    hero?.classList.remove("has-cover");
+    return;
+  }
+
   const coverImage = new Image();
   coverImage.onload = () => {
     hero.style.backgroundImage = `url('${coverImage.src}')`;
@@ -277,13 +296,27 @@ const applyHeroImages = () => {
   coverImage.onerror = () => {
     hero.classList.remove("has-cover");
   };
-  coverImage.src = "assets/cover.png";
-
-  heroLogo.onerror = () => {
-    heroLogo.classList.add("is-hidden");
-  };
+  coverImage.src = coverPath;
 };
 
+const applyHeroLogo = () => {
+  if (!heroLogo) {
+    return;
+  }
+  const logoPath = CONFIG.assets?.logo?.trim();
+  if (logoPath) {
+    heroLogo.src = logoPath;
+    heroLogo.alt = `${CONFIG.nombre} logo`;
+    heroLogo.classList.remove("isHidden");
+    heroLogo.onerror = () => {
+      heroLogo.classList.add("isHidden");
+    };
+  } else {
+    heroLogo.classList.add("isHidden");
+  }
+};
+
+document.title = CONFIG.nombre;
 safeSetText("#restaurant-name", CONFIG.nombre);
 safeSetText("#restaurant-subtitle", CONFIG.subtitulo);
 renderHistoria();
@@ -291,3 +324,4 @@ renderDatos();
 renderMenu();
 renderActions();
 applyHeroImages();
+applyHeroLogo();

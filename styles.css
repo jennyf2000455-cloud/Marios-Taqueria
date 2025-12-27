@@ -93,17 +93,19 @@ a {
   padding: 4rem 0;
 }
 
-.hero__logo {
-  width: 90px;
-  height: 90px;
+.heroLogo {
+  width: 120px;
+  max-width: 40vw;
+  height: auto;
+  display: block;
+  margin: 0 auto 12px auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
   object-fit: contain;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
 }
 
-.hero__logo.is-hidden {
-  display: none;
+.isHidden {
+  display: none !important;
 }
 
 .hero__title {
@@ -309,5 +311,12 @@ a {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
+  }
+}
+
+@media (min-width: 900px) {
+  .heroLogo {
+    width: 150px;
+    margin-bottom: 14px;
   }
 }
