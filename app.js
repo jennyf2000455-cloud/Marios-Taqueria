@@ -2,8 +2,7 @@ const CONFIG = {
   nombre: "Taqueria y Antojitos Mario",
   subtitulo: "Auténticos antojitos mexicanos en Los Fresnos",
   assets: {
-    logo: "assets/mario-logo.jpeg";
-",
+    logo: "assets/mario-logo.jpeg",
     cover: "",
     qr: ""
   },
