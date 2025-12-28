@@ -158,27 +158,25 @@ const CONFIG = {
   ]
 };
 
-const historyContainer = document.querySelector("#historia-content");
-const datosContainer = document.querySelector("#datos-content");
-const menuContainer = document.querySelector("#menu-content");
-const actionsContainer = document.querySelector("#actions-content");
-const hero = document.querySelector(".hero");
-const heroLogo = document.querySelector("#heroLogo");
-
-const safeSetText = (selector, text) => {
-  const element = document.querySelector(selector);
+const safeSetText = (element, text) => {
   if (element) {
     element.textContent = text;
   }
 };
 
-const renderHistoria = () => {
+const renderHistoria = (historyContainer) => {
+  if (!historyContainer) {
+    return;
+  }
   historyContainer.innerHTML = CONFIG.historia
     .map((paragraph) => `<p>${paragraph}</p>`)
     .join("");
 };
 
-const renderDatos = () => {
+const renderDatos = (datosContainer) => {
+  if (!datosContainer) {
+    return;
+  }
   const horarios = Object.entries(CONFIG.horarios)
     .map(([dia, horario]) => `<p><strong>${dia}:</strong> ${horario}</p>`)
     .join("");
@@ -203,7 +201,10 @@ const renderDatos = () => {
   `;
 };
 
-const renderMenu = () => {
+const renderMenu = (menuContainer) => {
+  if (!menuContainer) {
+    return;
+  }
   menuContainer.innerHTML = CONFIG.menu
     .map((category) => {
       const items = category.items
@@ -235,7 +236,10 @@ const renderMenu = () => {
     .join("");
 };
 
-const renderActions = () => {
+const renderActions = (actionsContainer) => {
+  if (!actionsContainer) {
+    return;
+  }
   const whatsappMessage = encodeURIComponent(
     "Hola, me gustaría hacer una pregunta sobre el menú."
   );
@@ -281,7 +285,7 @@ const renderActions = () => {
   `;
 };
 
-const applyHeroImages = () => {
+const applyHeroImages = (hero) => {
   const coverPath = CONFIG.assets?.cover?.trim();
   if (!hero || !coverPath) {
     hero?.classList.remove("has-cover");
@@ -299,7 +303,7 @@ const applyHeroImages = () => {
   coverImage.src = coverPath;
 };
 
-const applyHeroLogo = () => {
+const applyHeroLogo = (heroLogo) => {
   if (!heroLogo) {
     return;
   }
@@ -316,12 +320,25 @@ const applyHeroLogo = () => {
   }
 };
 
-document.title = CONFIG.nombre;
-safeSetText("#restaurant-name", CONFIG.nombre);
-safeSetText("#restaurant-subtitle", CONFIG.subtitulo);
-renderHistoria();
-renderDatos();
-renderMenu();
-renderActions();
-applyHeroImages();
-applyHeroLogo();
+const render = () => {
+  const historyContainer = document.querySelector("#historia-content");
+  const datosContainer = document.querySelector("#datos-content");
+  const menuContainer = document.querySelector("#menu-content");
+  const actionsContainer = document.querySelector("#actions-content");
+  const hero = document.querySelector(".hero");
+  const heroLogo = document.querySelector("#heroLogo");
+  const heroName = document.querySelector("#heroName");
+  const heroSubtitle = document.querySelector("#heroSubtitle");
+
+  document.title = CONFIG.nombre;
+  safeSetText(heroName, CONFIG.nombre);
+  safeSetText(heroSubtitle, CONFIG.subtitulo);
+  renderHistoria(historyContainer);
+  renderDatos(datosContainer);
+  renderMenu(menuContainer);
+  renderActions(actionsContainer);
+  applyHeroImages(hero);
+  applyHeroLogo(heroLogo);
+};
+
+document.addEventListener("DOMContentLoaded", render);
