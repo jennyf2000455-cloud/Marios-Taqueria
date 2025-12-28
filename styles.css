@@ -101,13 +101,11 @@ a {
 }
 
 .heroLogo {
-  width: 120px;
+  width: 130px;
   max-width: 40vw;
   height: auto;
   display: block;
-  margin: 0 auto 12px auto;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  margin: 0 auto 14px;
   object-fit: contain;
 }
 
@@ -325,6 +323,5 @@ a {
 @media (min-width: 900px) {
   .heroLogo {
     width: 150px;
-    margin-bottom: 14px;
   }
 }
