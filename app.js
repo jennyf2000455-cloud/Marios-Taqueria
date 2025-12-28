@@ -3,8 +3,7 @@ const CONFIG = {
   subtitulo: "Auténticos antojitos mexicanos en Los Fresnos",
   assets: {
     logo: "assets/mario-logo.jpeg",
-    cover: "",
-    qr: ""
+    cover: ""
   },
   historia: [
     "En Taqueria y Antojitos Mario celebramos los sabores tradicionales de México con una cocina cercana y familiar. Cada platillo se prepara al momento para mantener la esencia de la comida callejera con un toque casero.",
@@ -24,7 +23,6 @@ const CONFIG = {
     Domingo: "12:00 PM - 12:00 AM"
   },
   whatsapp: "9562336004",
-  crmUrl: "",
   menu: [
     {
       categoria: "Antojitos",
@@ -240,47 +238,22 @@ const renderActions = (actionsContainer) => {
   if (!actionsContainer) {
     return;
   }
+  const whatsappNumber = CONFIG.whatsapp?.trim();
+  if (!whatsappNumber) {
+    const actionsSection = actionsContainer.closest("section");
+    actionsSection?.remove();
+    return;
+  }
   const whatsappMessage = encodeURIComponent(
     "Hola, me gustaría hacer una pregunta sobre el menú."
   );
-  const whatsappLink = `https://wa.me/${CONFIG.whatsapp}?text=${whatsappMessage}`;
-  const crmEnabled = Boolean(CONFIG.crmUrl);
-  const qrPath = CONFIG.assets?.qr?.trim();
-  const qrImageStyle = qrPath ? "" : "display:none;";
-  const qrPlaceholderStyle = qrPath ? "display:none;" : "";
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   actionsContainer.innerHTML = `
     <article class="action-card">
       <h3>WhatsApp</h3>
       <p>Escríbenos para resolver dudas o tomar pedidos.</p>
       <a class="button" href="${whatsappLink}" target="_blank" rel="noopener">Abrir WhatsApp</a>
-    </article>
-    <article class="action-card">
-      <h3>Asistente IA</h3>
-      <div class="action-card__qr">
-        <img
-          src="${qrPath ?? ""}"
-          alt="QR del asistente"
-          style="${qrImageStyle}"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-        />
-        <span class="action-card__placeholder" style="${qrPlaceholderStyle}">QR disponible próximamente</span>
-      </div>
-    </article>
-    <article class="action-card">
-      <h3>CRM</h3>
-      <p>Accede al portal interno de gestión.</p>
-      <a
-        class="button ${crmEnabled ? "" : "button--disabled"}"
-        href="${crmEnabled ? CONFIG.crmUrl : "#"}"
-        target="_blank"
-        rel="noopener"
-      >
-        ${crmEnabled ? "Abrir CRM" : "CRM (próximamente)"}
-      </a>
-      <div class="info-card__actions">
-        <span class="action-card__placeholder">Espacio para más botones</span>
-      </div>
     </article>
   `;
 };
